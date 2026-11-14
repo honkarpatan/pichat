@@ -1,0 +1,49 @@
+{
+  "name": "Aicode GPT",
+  "version": "4.1.0",
+  "description": "Debug with color , build with compressed",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "node .devServer/start-dev",
+    "build": "webpack && node .devServer/pack-zip.js",
+    "build-release": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sou6900/Acode_Template.git"
+  },
+  "author": "Sourav Chand",
+  "license": "MIT",
+  "bugs": {
+    "url": "null"
+  },
+  "homepage": "https://github.com/Sou6900/Acode_Template/blob/main/readme.md",
+  "dependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.5",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "@paypal/paypal-js": "^9.4.1",
+    "@types/ace": "^0.0.50",
+    "babel-loader": "^9.1.0",
+    "crypto-js": "^4.2.0",
+    "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "dotenv": "^17.3.1",
+    "dotenv-webpack": "^9.0.0",
+    "firebase": "^10.13.1",
+    "html-loader": "^5.1.0",
+    "html-tag-js": "^2.0.4",
+    "ip": "^2.0.1",
+    "jszip": "^3.10.1",
+    "live-server": "^1.2.2",
+    "markdown-it": "^14.1.1",
+    "markdown-it-highlightjs": "^4.3.0",
+    "mathjax": "^3.2.2",
+    "prismjs": "^1.30.0",
+    "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}

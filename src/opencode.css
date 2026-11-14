@@ -1,0 +1,1030 @@
+/* ============================================================
+   opencode-theme.css
+   Full visual system: turn shell, collapse steps, diff cards,
+   flashing active indicator, status line. No typing-dot anywhere.
+   ============================================================ */
+
+:root {
+  --oc-bg: var(--primary-color);
+  --oc-border: var(--border-color);
+  --oc-line: var(--border-color);
+  --oc-dot: var(--secondary-text-color);
+  --oc-dot-active: var(--active-color);
+  --oc-dot-done: var(--success-color);
+  --oc-dot-error: var(--error-color);
+  --oc-text-dim: var(--secondary-text-color);
+  --oc-text: var(--primary-text-color);
+  --oc-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --oc-radius: 8px;
+}
+/* ---------- turn shell ("Worked for Ns") ---------- */
+.gpt-agent-work {
+  margin: 8px 0 10px;
+  border: none;
+  background: transparent;
+}
+.gpt-agent-work > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  color: var(--oc-text-dim);
+  transition: background .12s ease;
+}
+.gpt-agent-work > summary::-webkit-details-marker { display: none; }
+.gpt-agent-work > summary:hover { background: rgba(125,125,125,.08); }
+.gpt-agent-work-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--oc-dot-active);
+  flex-shrink: 0; opacity: .9;
+  box-shadow: 0 0 0 3px rgba(91,142,244,.15);
+}
+.gpt-agent-work[open] .gpt-agent-work-dot { background: var(--oc-dot-done); box-shadow: 0 0 0 3px rgba(63,185,127,.15); }
+.gpt-agent-work-title { flex: 1; font-weight: 500; opacity: .9; }
+
+/* ---------- flat parts container: append-only, id-stable ---------- */
+.gpt-agent-parts {
+  margin: 4px 0 0;
+  padding-left: 11px;
+  border-left: 2px solid var(--oc-line);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* status line (replaces the old floating typing-dot) */
+.gpt-turn-status {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--oc-text-dim);
+  padding: 3px 6px 6px 2px;
+}
+.gpt-turn-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--oc-dot-active);
+  animation: ocPulse 1.1s ease-in-out infinite;
+}
+
+/* ---------- generic part row ---------- */
+.gpt-part { position: relative; }
+.gpt-part.is-active .gpt-agent-step-dot,
+.gpt-part.is-active .gpt-turn-status-dot {
+  animation: ocPulse 1.1s ease-in-out infinite;
+}
+@keyframes ocPulse {
+  0%, 100% { opacity: .45; transform: scale(1); box-shadow: 0 0 0 0 rgba(91,142,244,.35); }
+  50%      { opacity: 1;   transform: scale(1.3); box-shadow: 0 0 0 4px rgba(91,142,244,0); }
+}
+
+/* ---------- tool step (collapsible) ---------- */
+.gpt-agent-collapse { margin: 1px 0 2px; border: none; background: transparent; }
+.gpt-agent-collapse > summary { list-style: none; cursor: pointer; user-select: none; }
+.gpt-agent-collapse > summary::-webkit-details-marker { display: none; }
+.gpt-agent-collapse-body {
+  margin: 2px 0 8px 14px;
+  padding: 7px 9px;
+  border-radius: var(--oc-radius);
+  border: 1px solid var(--oc-border);
+  background: var(--oc-bg);
+  max-height: 240px;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.gpt-agent-step {
+  display: flex; align-items: center; gap: 8px;
+  padding: 3px 6px; border-radius: 5px;
+  font-size: 12.5px; line-height: 1.45;
+  transition: background .1s ease;
+}
+.gpt-agent-step:hover { background: rgba(125,125,125,.06); }
+.gpt-agent-step-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--oc-dot); }
+.gpt-agent-step.is-success .gpt-agent-step-dot { background: var(--oc-dot-done); }
+.gpt-agent-step.is-error .gpt-agent-step-dot   { background: var(--oc-dot-error); }
+.gpt-agent-step.is-running .gpt-agent-step-dot { background: var(--oc-dot-active); }
+.gpt-agent-step-verb { color: var(--oc-text); font-weight: 600; white-space: nowrap; flex-shrink: 0; font-family: var(--oc-mono); font-size: 12px; }
+.gpt-agent-step-fade {
+  flex: 1; min-width: 0; color: var(--oc-text-dim); opacity: .75; font-size: 11.5px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.gpt-agent-step-chevron-fade { flex-shrink: 0; opacity: .4; font-size: 11px; transition: transform .15s ease; }
+.gpt-agent-collapse[open] > summary .gpt-agent-step-chevron-fade,
+.gpt-agent-work[open] > summary .gpt-agent-step-chevron-fade { transform: rotate(-180deg); opacity: .75; }
+
+/* ---------- text part ---------- */
+.gpt-part-text-wrap { margin: 3px 0 10px; font-size: 13.5px; line-height: 1.65; color: var(--oc-text); }
+.gpt-part-text-raw { white-space: pre-wrap; word-break: break-word; opacity: .92; font-family: inherit; }
+.gpt-part-text-wrap.is-streaming .part-text::after {
+  content: '▍'; display: inline-block; margin-left: 1px;
+  color: var(--oc-dot-active);
+  animation: ocBlink 1s step-end infinite;
+}
+@keyframes ocBlink { 50% { opacity: 0; } }
+
+/* ---------- file diff card (Claude/OpenCode style) ---------- */
+.gpt-diff-view {
+  margin: 4px 0 10px;
+  border: 1px solid var(--oc-border);
+  border-radius: var(--oc-radius);
+  overflow: hidden;
+  background: rgba(10,10,14,.5);
+}
+.gpt-diff-view.is-streaming { border-color: rgba(91,142,244,.35); }
+.gpt-diff-view.is-failed    { border-color: rgba(229,96,90,.4); }
+.gpt-diff-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px;
+  background: rgba(255,255,255,.03);
+  border-bottom: 1px solid var(--oc-border);
+  font-size: 12px; cursor: pointer; user-select: none;
+}
+.gpt-diff-header-title { font-family: var(--oc-mono); font-weight: 600; color: var(--oc-text); flex: 1; }
+.gpt-diff-header-stats { display: flex; gap: 6px; font-family: var(--oc-mono); font-size: 11px; }
+.gpt-diff-header-stats .add { color: var(--oc-dot-done); }
+.gpt-diff-header-stats .rem { color: var(--oc-dot-error); }
+.gpt-diff-eye { background: transparent; border: none; color: var(--oc-text-dim); cursor: pointer; padding: 2px; display: flex; }
+.gpt-diff-eye:hover { color: var(--oc-text); }
+.gpt-diff-content {
+  max-height: 260px; overflow: auto; scrollbar-width: thin;
+  font-family: var(--oc-mono); font-size: 12px; line-height: 1.55;
+}
+.gpt-diff-view.is-collapsed .gpt-diff-content { display: none; }
+.gpt-diff-row { display: flex; padding: 0 10px; white-space: pre; }
+.gpt-diff-row.gpt-diff-add { background: rgba(63,185,127,.08); }
+.gpt-diff-row.gpt-diff-del { background: rgba(229,96,90,.08); }
+.gpt-diff-row.gpt-diff-sep { color: var(--oc-text-dim); opacity: .5; justify-content: center; padding: 2px 0; }
+.gpt-diff-ln { width: 34px; flex-shrink: 0; opacity: .4; text-align: right; margin-right: 8px; user-select: none; }
+.gpt-diff-sign { width: 12px; flex-shrink: 0; opacity: .7; }
+.gpt-diff-row.gpt-diff-add .gpt-diff-sign { color: var(--oc-dot-done); }
+.gpt-diff-row.gpt-diff-del .gpt-diff-sign { color: var(--oc-dot-error); }
+.gpt-diff-text { white-space: pre; overflow-x: auto; }
+
+/* ---------- file tree / web-search entries ---------- */
+.gpt-file-tree { display: flex; flex-direction: column; gap: 1px; }
+.gpt-file-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 4px; border-radius: 4px;
+  font-size: 11.5px; color: var(--oc-text-dim);
+}
+.gpt-file-row.is-dir { color: var(--oc-text); }
+.gpt-file-row.is-link { cursor: pointer; }
+.gpt-file-row.is-link:hover { background: rgba(125,125,125,.08); }
+.gpt-file-name { font-family: var(--oc-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- permission card ---------- */
+.gpt-permission-card {
+  margin-top: 6px; border: 1px solid rgba(75,93,209,.35);
+  border-radius: var(--oc-radius); overflow: hidden;
+  background: rgba(75,93,209,.06); transition: opacity .18s ease;
+}
+.gpt-perm-header { display: flex; align-items: center; gap: 8px; padding: 8px 10px; font-size: 12.5px; font-weight: 600; color: var(--active-color, #4b5dd1); }
+.gpt-perm-body { padding: 0 10px 8px; font-size: 12px; color: var(--oc-text-dim); }
+.gpt-perm-target { font-family: var(--oc-mono); color: var(--oc-text); }
+.gpt-perm-actions { display: flex; gap: 8px; padding: 0 10px 10px; }
+.gpt-perm-actions button {
+  flex: 1; padding: 6px 0; border-radius: 6px; border: 1px solid var(--oc-border);
+  background: rgba(255,255,255,.03); color: var(--oc-text); font-size: 12px; cursor: pointer;
+}
+.gpt-btn-accept { border-color: rgba(63,185,127,.4) !important; color: var(--oc-dot-done) !important; }
+.gpt-btn-reject { border-color: rgba(229,96,90,.4) !important; color: var(--oc-dot-error) !important; }
+
+/* ---------- error footer ---------- */
+.gpt-stream-error {
+  margin-top: 10px; padding: 10px 12px;
+  border: 1px solid rgba(229,96,90,.35); border-radius: var(--oc-radius);
+  background: rgba(229,96,90,.06); font-size: 12.5px;
+}
+.gpt-stream-error-msg { color: #ff8a80; margin-bottom: 8px; }
+.gpt-stream-continue-btn {
+  padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(229,96,90,.4);
+  background: transparent; color: var(--oc-text); cursor: pointer; font-size: 12px;
+}
+
+
+.gpt-card-actions{display:flex;gap:8px;padding:8px 0 2px;}
+.gpt-card-actions button{flex:1;padding:6px 0;border-radius:6px;border:1px solid var(--oc-border);background:rgba(255,255,255,.03);color:var(--oc-text);font-size:12px;cursor:pointer;}
+.gpt-card-actions .gpt-btn-accept{border-color:rgba(63,185,127,.4)!important;color:var(--oc-dot-done)!important;}
+.gpt-card-actions .gpt-btn-reject{border-color:rgba(229,96,90,.4)!important;color:var(--oc-dot-error)!important;}
+.gpt-diff-view.is-confirming{border-color:rgba(91,142,244,.4);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================================================
+   opencode-exact.css — replaces AGENT_COLLAPSE_CSS,
+   PARTS_RENDERER_CSS, and the earlier opencode-theme.css block.
+   Load ONLY this file for the turn/thread UI.
+   ============================================================ */
+
+:root {
+  --oc2-bg: #0d0f13;
+  --oc2-border: rgba(255,255,255,.08);
+  --oc2-line: rgba(255,255,255,.14);
+  --oc2-text: var(--primary-text-color, #e7e7ea);
+  --oc2-text-dim: var(--secondary-text-color, #8a8f98);
+  --oc2-active: #5b8ef4;
+  --oc2-done: #3fb97f;
+  --oc2-error: #e5605a;
+  --oc2-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------- outer "Worked for Ns" shell ---------- */
+.gpt-oc-work { margin: 6px 0 10px; }
+.gpt-oc-work-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 6px; border-radius: 0; cursor: pointer; user-select: none;
+  font-size: 12.5px; color: var(--oc2-text-dim);
+}
+.gpt-oc-work-header:hover { background: rgba(255,255,255,.03); }
+.gpt-oc-work-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--oc2-active); flex-shrink: 0; }
+.gpt-oc-work.is-open .gpt-oc-work-dot { background: var(--oc2-done); }
+.gpt-oc-work-title { flex: 1; font-weight: 600; }
+.gpt-oc-work-body {
+  padding-top: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.28s ease;
+}
+.gpt-oc-work.is-open .gpt-oc-work-body {
+  /* JS sets exact max-height; this is a safe fallback so content is never clipped to 0 */
+  max-height: min(80vh, 4000px);
+  opacity: 1;
+  overflow: visible;
+}
+@keyframes gptOcWorkRowIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.gpt-oc-work.is-opening .gpt-oc-work-body .gpt-oc-row-wrap,
+.gpt-oc-work.is-opening .gpt-oc-work-body .gpt-thinking-wrap,
+.gpt-oc-work.is-opening .gpt-oc-work-body .gpt-oc-plan-wrap,
+.gpt-oc-work.is-opening .gpt-oc-work-body .gpt-oc-group {
+  animation: gptOcWorkRowIn 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--oc-i, 0) * 48ms);
+}
+
+
+/* ---------- thread container ---------- */
+.gpt-oc-thread, .gpt-agent-parts { display: flex; flex-direction: column; }
+
+/* ---------- row wrapper: [rail+icon] [main content] ---------- */
+.gpt-oc-row-wrap { display: flex; gap: 0; align-items: stretch; }
+.gpt-oc-rail {
+  position: relative; width: 20px; flex-shrink: 0;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 1px;
+}
+.gpt-oc-rail-line {
+  position: absolute; top: 18px; bottom: 0; left: 50%; width: 1.5px;
+  background: var(--oc2-line); transform: translateX(-50%);
+}
+.gpt-oc-row-wrap:first-child .gpt-oc-rail-line { top: 18px; }
+.gpt-oc-row-wrap:last-child  .gpt-oc-rail-line  { bottom: calc(100% - 20px); }
+
+.gpt-oc-icon {
+  position: relative; z-index: 1;
+  width: 16px; height: 16px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--oc2-text-dim, #9aa);
+  transition: border-color .2s ease, color .2s ease, opacity .2s ease, box-shadow .2s ease;
+}
+/* idle/done: keep type SVG — no green tick fill */
+.gpt-oc-icon.is-idle,
+.gpt-oc-icon.is-done {
+  background: transparent;
+  border-color: var(--oc2-line, rgba(125,125,125,.22));
+  color: var(--oc2-text-dim, #9aa);
+  opacity: .85;
+  border:none;
+}
+.gpt-oc-icon.is-error,
+.gpt-oc-icon.is-rejected {
+  background: rgba(229,96,90,.12);
+  border-color: var(--oc2-error, #e5605a);
+  color: var(--oc2-error, #e5605a);
+}
+/* running: type icon stays static — shine is on the TITLE only, not the SVG */
+.gpt-oc-icon.is-running {
+  opacity: 0.5;
+}
+.gpt-oc-spin { animation: gptOcSpin .8s linear infinite; }
+@keyframes gptOcSpin { to { transform: rotate(360deg); } }
+
+.gpt-oc-type-icon svg { width: 13px; height: 13px; }
+
+/* entry icons (list_directory / links) */
+.gpt-oc-entry-icon { width: 12px; height: 12px; flex-shrink: 0; opacity: .7; display: flex; }
+.gpt-oc-entry-icon svg { width: 12px; height: 12px; }
+
+/* search sub-row icon */
+.gpt-oc-subrow-icon { width: 11px; height: 11px; flex-shrink: 0; opacity: .6; margin-top: 2px; display: flex; }
+.gpt-oc-subrow-icon svg { width: 11px; height: 11px; }
+
+.gpt-oc-icon svg { width: 14px; height: 14px; }
+.gpt-oc-icon.is-running .gpt-oc-spin,
+.gpt-oc-plan-spin svg { animation: gptOcSpin .8s linear infinite; }
+
+/* ---------- main row content ---------- */
+.gpt-oc-row-main { flex: 1; min-width: 0; padding: 0 0 10px 8px; }
+.gpt-oc-row {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12.5px; line-height: 1.4; cursor: default;
+  padding: 1px 0;
+}
+.gpt-oc-row[data-toggle="1"] { cursor: pointer; }
+.gpt-oc-row-title {
+  font-weight: 600; color: var(--oc2-text); white-space: nowrap; flex-shrink: 0;
+  transition: opacity .25s ease;
+}
+.gpt-oc-row-meta {
+  flex: 1; min-width: 0; color: var(--oc2-text-dim);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.gpt-oc-mono { font-family: var(--oc2-mono); font-size: 12px; }
+.gpt-oc-chevron {
+  flex-shrink: 0; opacity: .55; width: 13px; height: 13px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+.gpt-oc-chevron svg { width: 11px; height: 11px; }
+.gpt-oc-chevron.is-open { transform: rotate(90deg); opacity: .85; }
+
+/* ── Title-only smooth shine (left → right). SVG icons never shine. ──
+   Applied to:
+   - .gpt-oc-work.is-working .gpt-oc-work-title  → top "Working…" while in progress
+   - .gpt-oc-row.is-active .gpt-oc-row-title     → current step e.g. "Searching web for"
+   Stops when is-working / is-active is removed (step done / work finished). */
+.gpt-oc-work.is-working .gpt-oc-work-title,
+.gpt-oc-row.is-active .gpt-oc-row-title {
+  font-weight: 600;
+  background: linear-gradient(
+    100deg,
+    rgba(160, 160, 160, 0.55) 0%,
+    rgba(160, 160, 160, 0.55) 40%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(160, 160, 160, 0.55) 60%,
+    rgba(160, 160, 160, 0.55) 100%
+  );
+  background-size: 220% 100%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* Slow sweep — no jitter */
+  animation: smoothShine 3.6s ease-in-out infinite;
+  will-change: background-position;
+}
+.gpt-oc-row.is-active .gpt-oc-row-meta { opacity: .75; }
+@keyframes smoothShine {
+  0% { background-position: 100% center; }
+  100% { background-position: -100% center; }
+}
+
+/* ---------- collapsible body (smooth open/close) ---------- */
+.gpt-oc-row-body {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  border-width: 0 !important;
+  background: rgba(255,255,255,.02);
+  max-height: 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  opacity: 0;
+  overflow: hidden !important;
+  scrollbar-width: thin;
+  pointer-events: none;
+  transition:
+    max-height 0.30s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.30s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.22s ease,
+    padding 0.22s ease,
+    margin 0.22s ease,
+    border-width 0.22s ease;
+}
+.gpt-oc-row-body.is-expanded {
+  margin: 4px 0 2px !important;
+  padding: 0 !important;
+  border: 1px solid var(--oc2-border) !important;
+  border-width: 1px !important;
+  max-height: 280px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  opacity: 1;
+  overflow: auto !important;
+  pointer-events: auto;
+}
+.gpt-oc-entries { display: flex; flex-direction: column; gap: 1px; }
+.gpt-oc-entry { display: flex; align-items: center; gap: 6px; padding: 2px 3px; border-radius: 4px; font-size: 11.5px; color: var(--oc2-text-dim); }
+.gpt-oc-entry svg { width: 12px; height: 12px; flex-shrink: 0; opacity: .7; }
+.gpt-oc-entry.is-dir { color: var(--oc2-text); }
+.gpt-oc-entry.is-link { cursor: pointer; }
+.gpt-oc-entry.is-link:hover { background: rgba(255,255,255,.05); }
+.gpt-oc-entry-name { font-family: var(--oc2-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gpt-oc-entry-empty { opacity: .4; font-size: 11px; }
+
+.gpt-oc-cmd-line { font-family: var(--oc2-mono); font-size: 11.5px; color: var(--oc2-text); margin-bottom: 4px; }
+.gpt-oc-cmd-prompt { color: var(--oc2-active); margin-right: 6px; }
+.gpt-oc-cmd-out { margin: 0; font-family: var(--oc2-mono); font-size: 11px; color: var(--oc2-text-dim); white-space: pre-wrap; word-break: break-word; }
+
+/* ---------- grouped search: "Ran N searches" + sub-rows ---------- */
+.gpt-oc-group-body { display: flex; flex-direction: column; gap: 3px; }
+.gpt-oc-subrow { display: flex; align-items: flex-start; gap: 7px; font-size: 12px; padding: 1px 0; }
+.gpt-oc-subrow-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--oc2-text-dim); margin-top: 6px; flex-shrink: 0; opacity: .6; }
+.gpt-oc-subrow-text { color: var(--oc2-text-dim); }
+.gpt-oc-subrow-verb { color: var(--oc2-text); font-weight: 500; margin-right: 4px; }
+
+/* ---------- file diff row ---------- */
+.gpt-oc-diff-stats { display: flex; gap: 6px; font-family: var(--oc2-mono); font-size: 11px; flex-shrink: 0; }
+.gpt-oc-diff-stats .add { color: var(--oc2-done); }
+.gpt-oc-diff-stats .rem { color: var(--oc2-error); }
+.gpt-oc-diff-body { font-family: var(--oc2-mono); font-size: 11.5px; line-height: 1.5; padding: 4px 0; }
+.gpt-oc-diff-row { display: flex; padding: 0 6px; white-space: pre; }
+.gpt-oc-diff-row.is-add { background: rgba(63,185,127,.09); }
+.gpt-oc-diff-row.is-del { background: rgba(229,96,90,.09); }
+.gpt-oc-diff-row.is-sep { color: var(--oc2-text-dim); opacity: .5; justify-content: center; }
+.gpt-oc-diff-ln { width: 30px; flex-shrink: 0; opacity: .4; text-align: right; margin-right: 8px; user-select: none; }
+.gpt-oc-diff-sign { width: 10px; flex-shrink: 0; opacity: .7; }
+.gpt-oc-diff-row.is-add .gpt-oc-diff-sign { color: var(--oc2-done); }
+.gpt-oc-diff-row.is-del .gpt-oc-diff-sign { color: var(--oc2-error); }
+.gpt-oc-diff-text { overflow-x: auto; }
+.gpt-oc-row-wrap.is-confirming .gpt-oc-row-body { border-color: rgba(91,142,244,.4); }
+
+.gpt-oc-eye { background: transparent; border: none; color: var(--oc2-text-dim); cursor: pointer; padding: 2px; display: flex; flex-shrink: 0; }
+.gpt-oc-eye:hover { color: var(--oc2-text); }
+
+/* ---------- prose text (no rail — plain paragraph) ---------- */
+.gpt-oc-text { margin: 2px 0 10px; font-size: 13.5px; line-height: 1.65; color: var(--oc2-text); }
+.gpt-oc-text-raw { white-space: pre-wrap; word-break: break-word; opacity: .92; }
+.gpt-oc-text.is-streaming .part-text::after {
+  content: '▍'; display: inline-block; margin-left: 1px; color: var(--oc2-active);
+  animation: gptOcBlink 1s step-end infinite;
+}
+@keyframes gptOcBlink { 50% { opacity: 0; } }
+
+/* ---------- Accept/Reject (referenced by PendingWriteGate.js / SequentialFileGate.js) ---------- */
+.gpt-card-actions:empty { display: none; }
+.gpt-card-actions { display: flex; gap: 8px; padding: 8px 0 2px; }
+.gpt-card-actions button {
+  flex: 1; padding: 6px 0; border-radius: 6px; border: 1px solid var(--oc2-border);
+  background: rgba(255,255,255,.03); color: var(--oc2-text); font-size: 12px; cursor: pointer;
+}
+.gpt-btn-accept { border-color: rgba(63,185,127,.4) !important; color: var(--oc2-done) !important; }
+.gpt-btn-reject { border-color: rgba(229,96,90,.4) !important; color: var(--oc2-error) !important; }
+
+/* ---------- permission card (LiveChatUI.js askForPermission — kept as-is) ---------- */
+.gpt-permission-card { margin-top: 6px; border: 1px solid rgba(91,142,244,.35); border-radius: 8px; overflow: hidden; background: rgba(91,142,244,.06); }
+.gpt-perm-header { display: flex; align-items: center; gap: 8px; padding: 8px 10px; font-size: 12.5px; font-weight: 600; color: var(--oc2-active); }
+.gpt-perm-body { padding: 0 10px 8px; font-size: 12px; color: var(--oc2-text-dim); }
+.gpt-perm-target { font-family: var(--oc2-mono); color: var(--oc2-text); }
+.gpt-perm-actions { display: flex; gap: 8px; padding: 0 10px 10px; }
+.gpt-perm-actions button { flex: 1; padding: 6px 0; border-radius: 6px; border: 1px solid var(--oc2-border); background: transparent; color: var(--oc2-text); font-size: 12px; cursor: pointer; }
+
+/* ---------- error footer ---------- */
+.gpt-stream-error { margin-top: 10px; padding: 10px 12px; border: 1px solid rgba(229,96,90,.35); border-radius: 8px; background: rgba(229,96,90,.06); font-size: 12.5px; }
+.gpt-stream-error-msg { color: #ff8a80; margin-bottom: 8px; }
+.gpt-stream-continue-btn { padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(229,96,90,.4); background: transparent; color: var(--oc2-text); cursor: pointer; font-size: 12px; }
+
+/* ---------- status line (pre-first-part transient status) ---------- */
+.gpt-turn-status { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--oc2-text-dim); padding: 3px 6px 6px 2px; }
+.gpt-turn-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--oc2-active); animation: gptOcPulse 1.1s ease-in-out infinite; }
+@keyframes gptOcPulse { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+
+
+
+
+
+/* ========== Plan sticky (full-width, #chat-box pin) ========== */
+/* Override .gpt-oc-row-wrap { display:flex } — sentinel must NOT sit beside the card */
+.gpt-oc-row-wrap.gpt-oc-plan-wrap {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+.gpt-oc-plan-wrap {
+  position: relative;
+  width: 100%;
+}
+/* In-flow marker only — never a flex sibling */
+.gpt-oc-plan-sentinel {
+  display: block;
+  height: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+}
+.gpt-oc-plan-placeholder {
+  display: block;
+  width: 100%;
+  pointer-events: none;
+}
+.gpt-oc-plan-sticky {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gpt-oc-plan-sticky .gpt-oc-row-main {
+  flex: 1 1 0%;
+  min-width: 0px;
+  width: auto;
+  background: var(--secondary-color);
+}
+/* JS fixed-pin is the real path. CSS sticky disabled while fixed to avoid dual-layout jitter. */
+.gpt-oc-plan-wrap.is-sticky:not(.is-fixed-sticky) .gpt-oc-plan-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+}
+.gpt-oc-plan-wrap.is-fixed-sticky .gpt-oc-plan-sticky {
+  /* position/top/left/width set by JS */
+  background: var(--secondary-color);
+  padding: 0px;
+}
+/* Soft appear when plan pins under the top bar */
+.gpt-oc-plan-wrap.is-fixed-sticky .gpt-oc-plan-sticky.gpt-oc-plan-stick-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.gpt-oc-plan-wrap.is-fixed-sticky .gpt-oc-plan-sticky.gpt-oc-plan-stick-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .22s ease-out, transform .22s ease-out;
+}
+.gpt-oc-plan-placeholder {
+  /* FULL plan height while compact card is fixed — prevents chat height jump */
+  flex-shrink: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+.gpt-oc-plan-list {
+  max-height: min(180px, 36vh);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: max-height .28s ease;
+}
+.gpt-oc-plan-card {
+  border: 1px solid var(--oc2-border, rgba(255,255,255,.08));
+  border-radius: 10px;
+  background: rgba(255,255,255,.03);
+  padding: 8px 10px 10px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+.gpt-oc-plan-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--oc2-text, #eaeaea);
+}
+.gpt-oc-plan-header-icon { display: flex; opacity: .85; }
+.gpt-oc-plan-header-icon svg { width: 14px; height: 14px; }
+.gpt-oc-plan-header-count {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--oc2-text-dim, #9aa);
+  font-family: var(--oc2-mono, ui-monospace, monospace);
+}
+.gpt-oc-plan-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  padding: 3px 2px;
+  line-height: 1.35;
+  color: var(--oc2-text-dim, #9aa);
+}
+.gpt-oc-plan-item.is-active { color: var(--oc2-text, #eaeaea); font-weight: 500; }
+.gpt-oc-plan-item.is-done { opacity: .72; }
+.gpt-oc-plan-item.is-pending { opacity: .55; }
+.gpt-oc-plan-icon {
+  width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+}
+.gpt-oc-plan-icon svg { width: 12px; height: 12px; }
+.gpt-oc-plan-text { min-width: 0; }
+
+.gpt-oc-plan-compact {
+  display: none;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--oc2-border, rgba(255,255,255,.08));
+  border-radius: 8px;
+  background: var(--secondary-color);
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+.gpt-oc-plan-compact-list {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.gpt-oc-plan-compact-count {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--oc2-text-dim, #9aa);
+  font-family: var(--oc2-mono, ui-monospace, monospace);
+  padding-top: 2px;
+}
+
+.gpt-oc-plan-wrap.is-compact:not(.is-expanded) .gpt-oc-plan-compact { display: flex; }
+.gpt-oc-plan-wrap.is-compact:not(.is-expanded) .gpt-oc-plan-card { display: none; }
+.gpt-oc-plan-wrap.is-compact:not(.is-expanded) .gpt-oc-rail { display: none; }
+
+.gpt-oc-plan-wrap.is-expanded .gpt-oc-plan-compact { display: none !important; }
+.gpt-oc-plan-wrap.is-expanded .gpt-oc-plan-card { display: block !important; }
+.gpt-oc-plan-wrap.is-expanded .gpt-oc-rail { display: flex; }
+.gpt-oc-plan-wrap.is-expanded .gpt-oc-plan-list {
+  max-height: min(220px, 42vh);
+}
+.gpt-oc-plan-wrap:not(.is-compact) .gpt-oc-plan-compact { display: none; }
+
+/* ========== Smooth step appear ========== */
+.gpt-oc-row-wrap.gpt-oc-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.gpt-oc-row-wrap.gpt-oc-enter-active {
+  opacity: 1;
+  transform: none;
+  transition: opacity .28s ease-out, transform .28s ease-out;
+}
+
+.gpt-perm-diff, .gpt-perm-diff-split pre {
+  max-height: 220px;
+  overflow: auto;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.25);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.gpt-perm-diff-split { display: flex; flex-direction: column; gap: 6px; }
+.gpt-perm-label { font-size: 10px; opacity: 0.7; margin-bottom: 4px; }
+.gpt-perm-old pre { border-left: 3px solid #e57373; }
+.gpt-perm-new pre { border-left: 3px solid #81c784; }
+
+
+/* ========== Thinking / reasoning card (Plan 3) ========== */
+.gpt-thinking-wrap {
+  width: 100%;
+  margin: 6px 0 10px;
+  box-sizing: border-box;
+}
+.gpt-thinking-card {
+  border: 1px solid var(--border-color, #333);
+  border-radius: 10px;
+  background: var(--secondary-color, rgba(0,0,0,0.18));
+  overflow: hidden;
+}
+.gpt-thinking-card.is-streaming {
+  border-color: color-mix(in srgb, var(--button-background-color, #4b5dd1) 55%, var(--border-color, #333));
+}
+.gpt-thinking-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--primary-text-color, #eee);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+}
+.gpt-thinking-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--button-background-color, #4b5dd1);
+  opacity: 0.85;
+}
+.gpt-thinking-card.is-streaming .gpt-thinking-dot {
+  animation: gpt-thinking-pulse 1.1s ease-in-out infinite;
+}
+@keyframes gpt-thinking-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+.gpt-thinking-title {
+  flex: 1;
+  min-width: 0;
+  opacity: 0.85;
+  letter-spacing: 0.02em;
+}
+.gpt-thinking-body {
+  padding: 0 12px 10px;
+  max-height: 220px;
+  overflow: auto;
+  border-top: 1px solid var(--border-color, rgba(255,255,255,0.06));
+}
+.gpt-thinking-pre {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.45;
+  opacity: 0.78;
+  color: var(--primary-text-color, #ddd);
+}
+.gpt-thinking-redacted,
+.gpt-thinking-placeholder {
+  margin: 8px 0 0;
+  font-size: 12px;
+  opacity: 0.55;
+  font-style: italic;
+}
+
+
+/* Thinking body — prose inside Working row, never code/diff chrome */
+.gpt-oc-thinking-body {
+  margin: 0;
+  padding: 2px 0;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.78;
+  color: var(--primary-text-color, #ddd);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+.gpt-oc-row-body:has(.gpt-oc-thinking-body) {
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+/* Done thinking rows must not keep title shine */
+.gpt-oc-row-wrap[data-status="done"] .gpt-oc-row-title,
+.gpt-oc-row-wrap[data-status="error"] .gpt-oc-row-title {
+  animation: none !important;
+  background: none !important;
+  -webkit-text-fill-color: unset !important;
+  color: inherit;
+}
+
+
+.gpt-oc-thinking-notice {
+  font-size: 10px;
+  opacity: 0.55;
+  font-style: italic;
+  margin: 0 0 6px;
+  line-height: 1.35;
+  color: var(--primary-text-color, #ccc);
+}
+.gpt-oc-thinking-body.gpt-md {
+  white-space: normal;
+}
+.gpt-oc-thinking-body.gpt-md p { margin: 0.35em 0; }
+.gpt-oc-thinking-body.gpt-md pre {
+  margin: 6px 0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.28);
+  overflow-x: auto;
+  max-width: 100%;
+  font-size: 11.5px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.gpt-oc-thinking-body.gpt-md code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+.gpt-oc-thinking-body.gpt-md pre code {
+  background: transparent;
+  padding: 0;
+}
+.gpt-oc-thinking-body.gpt-md ul,
+.gpt-oc-thinking-body.gpt-md ol { margin: 0.35em 0 0.35em 1.2em; padding: 0; }
+.gpt-oc-thinking-body.gpt-md li { margin: 0.15em 0; }
+
+
+/* ---------- file coverage track (horizontal, VS Code scrollbar marks) ---------- */
+.gpt-oc-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+.gpt-oc-cov {
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: 72px;
+  max-width: 30%;
+  height: 5px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.gpt-oc-cov-track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 5px;
+  border-radius: 2px;
+  /* untouched = grey */
+  background: color-mix(in srgb, var(--border-color, #555) 70%, transparent);
+  overflow: hidden;
+}
+.gpt-oc-cov-seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 1px;
+  transition: left 0.35s ease, width 0.35s ease, background 0.25s ease;
+  min-width: 2px;
+}
+/* Read — blue */
+.gpt-oc-cov-seg.is-read {
+  background: color-mix(in srgb, #4fc3f7 88%, #1565c0);
+  opacity: 0.92;
+}
+/* Added — green */
+.gpt-oc-cov-seg.is-add {
+  background: color-mix(in srgb, #66bb6a 90%, #2e7d32);
+  opacity: 0.95;
+}
+/* Removed — red */
+.gpt-oc-cov-seg.is-remove {
+  background: color-mix(in srgb, #ef5350 90%, #c62828);
+  opacity: 0.95;
+}
+/* Generic edit */
+.gpt-oc-cov-seg.is-edit {
+  background: color-mix(in srgb, var(--button-background-color, #4b5dd1) 90%, #7aa2ff);
+  opacity: 0.9;
+}
+
+.gpt-oc-cov-dual {
+  width: 72px;
+  max-width: 30%;
+  height: 8px;
+  margin-left: auto;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+}
+.gpt-oc-cov-svg {
+  display: block;
+  width: 72px;
+  height: 4px;
+  overflow: visible;
+}
+.gpt-oc-cov-base {
+  fill: color-mix(in srgb, var(--border-color, #555) 70%, transparent);
+}
+.gpt-oc-cov-svg .is-add {
+  fill: color-mix(in srgb, #66bb6a 92%, #2e7d32);
+}
+.gpt-oc-cov-svg .is-remove {
+  fill: color-mix(in srgb, #ef5350 92%, #c62828);
+}
+.gpt-oc-cov-svg .is-edit {
+  fill: color-mix(in srgb, var(--button-background-color, #4b5dd1) 90%, #7aa2ff);
+}
+.gpt-oc-cov-svg .is-read {
+  fill: color-mix(in srgb, #4fc3f7 88%, #1565c0);
+}
+
+
+/* ========== GPT Start Page themes (layout motion; colors via --sp-*) ========== */
+.gpt-start-page { width: 100%; }
+.gpt-start-anim-fade { animation: gptStartFade 0.45s ease both; }
+.gpt-start-anim-fade-up { animation: gptStartFadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+.gpt-start-anim-scale-in { animation: gptStartScale 0.48s cubic-bezier(0.22,1,0.36,1) both; }
+@keyframes gptStartFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes gptStartFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes gptStartScale {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+.gpt-start-cmd-chip:active { transform: scale(0.97); opacity: 1 !important; }
+
+/* Full-width horizontal scroll — chips stay center when few, scroll when many */
+.gpt-start-cmd-scroll {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  touch-action: pan-x;
+}
+.gpt-start-cmd-scroll::-webkit-scrollbar { height: 3px; }
+.gpt-start-cmd-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-color, rgba(128,128,128,.35));
+  border-radius: 3px;
+}
+.gpt-start-cmd-row {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  width: max-content;
+  min-width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  -webkit-overflow-scrolling: touch;
+}
+.gpt-start-cmd-chip {
+  flex: 0 0 auto !important;
+  touch-action: manipulation;
+}
+.gpt-start-info-inner {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  min-width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+.gpt-start--professional .gpt-start-greeting {
+  font-size: 1.2em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.gpt-start--professional .gpt-start-model-name {
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  opacity: 0.45;
+}
+.gpt-start--grok .gpt-start-greeting { font-size: 1.35em; font-weight: 700; letter-spacing: -0.02em; }
+.gpt-start--claude .gpt-start-greeting { font-weight: 500; opacity: 0.88; }
+.gpt-start--codex .gpt-start-greeting { font-family: var(--oc2-mono, ui-monospace, monospace); font-size: 1.05em; }

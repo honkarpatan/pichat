@@ -1,0 +1,19 @@
+{
+  "id": "cosmo.aicode.gpt",
+  "name": "ACodeX GPT (Agent)",
+  "main": "dist/main.js",
+  "version": "7.0.0",
+  "readme": "readme.md",
+  "icon": "icon.png",
+  "license": "MIT",
+  "files": [],
+  "keywords": ["Ai","Agent","Chat","Copilot","Assistant","Aicode","Ollama","Offline Ai","Fim","Canvas","AutoFix","Diff"],
+  "price": 85,
+  "minVersionCode": 290,
+  "author": {
+    "name": "Sourav Chand",
+    "email": "devs.sourav@gmail.com",
+    "url": "",
+    "github": "https://github.com/Sou6900"
+  }
+}

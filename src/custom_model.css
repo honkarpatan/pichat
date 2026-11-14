@@ -1,0 +1,151 @@
+/* ========== Create Custom Model modal ========== */
+.gpt-cm-create-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.gpt-cm-create-overlay.is-open {
+  opacity: 1;
+}
+.gpt-cm-create-dialog {
+  width: 100%;
+  max-width: 380px;
+  max-height: min(88vh, 640px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--primary-color, #1a1a1a);
+  color: var(--primary-text-color, #fff);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+.gpt-cm-create-dialog-wide {
+  max-width: 400px;
+}
+.gpt-cm-create-header {
+  flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+}
+.gpt-cm-create-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+.gpt-cm-create-sub {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--secondary-text-color, #9aa);
+  margin-top: 4px;
+}
+.gpt-cm-back {
+  border: 0;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--primary-text-color, #fff);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.gpt-cm-ai-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 12px 14px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+.gpt-cm-ai-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border-radius: 10px;
+  background: var(--secondary-color, rgba(0, 0, 0, 0.2));
+  color: var(--primary-text-color, #fff);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.gpt-cm-ai-card:hover {
+  border-color: var(--button-background-color, #4b5dd1);
+  background: rgba(75, 93, 209, 0.12);
+}
+.gpt-cm-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.gpt-cm-thumb img,
+.gpt-cm-thumb svg {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+.gpt-cm-ai-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+.gpt-cm-ai-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.gpt-cm-ai-sub {
+  font-size: 10px;
+  color: var(--secondary-text-color, #888);
+}
+.gpt-cm-create-body {
+  padding: 12px 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.gpt-cm-create-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 16px 14px;
+  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+}
+.gpt-cm-caps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.gpt-cm-cap {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(75, 93, 209, 0.15);
+  color: #8b9cff;
+  border: 1px solid rgba(75, 93, 209, 0.3);
+}

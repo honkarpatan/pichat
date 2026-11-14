@@ -1,0 +1,40 @@
+## 7.0.0
+
+### Agent
+- Tool loop: core tools + deferred load via tool_search
+- Checkpoints; resume or discard after stop / reload
+- Truncate big tool results; stop stuck loops with a clear reason
+- Explore → implement → force-write when the model only re-reads
+- Workspace path checks; memory & skills under .aicodex/
+- AGENTS.md / project memory inject; /compact for long chats
+- Outline + ranged read on large files (less full-file scan)
+- Subagents (explore / general); plan mode before writes
+- Permissions (/perms), hooks, background process helpers
+- Rename / move / copy; fetch_content; optional web search
+- Custom agents, slash commands, and skills roots
+- Undo / redo file changes (/undo, /redo); recursive delete
+
+### Chat UI
+- Work panel with collapsible step rows (read, edit, run, think…)
+- Read/edit coverage bar: blue for reads, green/red for patches (multi-range, real file length)
+- Diffs show only changed hunks with ··· between distant edits
+- Thinking card when the model supports reasoning
+- Branch history on your messages; soft-edit + cancel
+- Images and file chips on messages; large paste as chip
+- Live markdown (normal or collapsible headings)
+- Event lines for rate limit, key switch, and stops
+- Start page layouts per provider; usage ring when the API reports credits
+- Message footers: model id, timing; copy feedback
+- / settings, undo, redo, path, and other slash commands
+
+### Providers
+- OpenRouter, OpenAI-compatible, Gemini, Mistral agent routes
+- Multi-key retry with trying / tried status
+- Recommended models for agent; model list filters
+
+### Fixes
+- Status / key rows no longer break mid-sentence text
+- Explore → Explored stays one row
+- Resume banner clears after discard
+- Project memory only under .aicodex/
+- Mid-file reads mark the right place on the coverage bar

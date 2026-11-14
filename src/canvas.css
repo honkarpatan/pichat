@@ -1,0 +1,55 @@
+        #gpt-dedicated-canvas-container {
+            display: none;
+        }
+        #gpt-dedicated-canvas-container.gpt-canvas-open {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: flex;
+            justify-content: flex-end;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+        }
+        .gpt-canvas-panel {
+            background: var(--primary-color, #111);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            box-shadow: -4px 0 24px rgba(0,0,0,0.35);
+            animation: slideInRight 0.3s ease;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        .gpt-canvas-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 14px; border-bottom: 1px solid var(--border-color, rgba(255,255,255,0.1));
+            color: var(--primary-text-color);
+            flex-shrink: 0;
+            background: var(--secondary-color, #222);
+        }
+        .gpt-canvas-title { font-weight: 600; font-size: 0.95em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .gpt-canvas-actions { display: flex; align-items: center; gap: 4px; }
+        .gpt-canvas-btn { cursor: pointer; display: flex; align-items: center; padding: 6px; border-radius: 6px; color: var(--primary-text-color); }
+        .gpt-canvas-btn:active, .gpt-canvas-btn:hover { background: rgba(255,255,255,0.1); }
+        .gpt-canvas-body { flex: 1; position: relative; background: #fff; }
+        .gpt-canvas-body iframe { width: 100%; height: 100%; border: none; background: #fff; }
+        .gpt-canvas-loading { padding: 16px; color: #888; font-size: 0.9em; text-align: center; margin-top: 20px; }
+
+        @media (min-width: 768px) {
+            .gpt-canvas-panel { width: min(720px, 60vw); border-left: 1px solid var(--border-color, rgba(255,255,255,0.1)); }
+        }
+
+        .gpt-canvas-trigger {
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: -1px; padding: 6px 12px; border-radius: 4px 4px 0px 0px;
+            border: 1px solid var(--border-color, rgba(255,255,255,0.15));
+            background: rgba(255,255,255,0.03);
+            color: var(--primary-text-color);
+            cursor: pointer; font-size: 0.85em; user-select: none;
+            transition: background 0.2s;
+        }
+        .gpt-canvas-trigger:hover { background: rgba(255,255,255,0.08); }
+        .gpt-canvas-trigger:active { opacity: 0.6; }

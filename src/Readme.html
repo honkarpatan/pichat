@@ -1,0 +1,717 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+
+<style>
+*{
+  margin: 0;
+}
+  #div {
+    font-family:sans-serif;
+    color: var(--primary-text-color);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100vw;
+    margin-bottom: 30px;
+  }
+  .aicode-header{
+    position: sticky;
+    top:0;
+    background: #0b0b0b;
+    margin: 0;
+    z-index: 1;
+    font-family:Monospace;
+  }
+  
+  h1, h2, h3 {
+    color: var(--primary-text-color, #c5c5c5);
+    margin: 16px 0;
+  }
+  h2{
+    font-family:Monospace;
+  }
+  .begining-para {
+    line-height: 1.6;
+    font-family:Monospace;
+    }
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    padding: 5px;
+  }
+  .feature-list ul, .upcoming-list ul , ul li {
+    list-style-type: disc;
+    padding-left: 5px;
+  }
+  
+  .highlight li{
+    padding: 5px;
+    background-color: #00000019;
+    margin: 5px 0;
+    border-radius: 2px;
+    border-left: 15px solid #0a5e91;
+    list-style: none;
+  }
+  .current li{
+    padding: 5px;
+    background-color: #0000000b;
+    margin: 5px 0;
+    border-radius: 2px;
+    border-left: 15px solid #0a915c;
+    list-style: none;
+  }
+  
+    .old li{
+    padding: 5px;
+    background-color: #00000019;
+    margin: 5px 0;
+    border-radius: 2px;
+    border-left: 15px solid #913f0a;
+    list-style: none;
+  }
+  .section li{
+    list-style: none;
+  }
+  .feature-item, .upcoming-item {
+    padding: 8px 0;
+    color: #a28608;
+  }
+
+
+  .highlight {
+    padding-top:10px ;
+    border-radius: 12px;
+    color: #199cebdc;
+    background-color: #325a970d;
+  }
+  .current {
+    color: var(--primary-text-color);
+    background-color: #32973f0d;
+  }
+  .old{
+    color: var(--primary-text-color);
+    background-color: #9288710d;
+  }
+  .section {
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px dotted grey;
+    margin-bottom: 25px;
+    width: 90%;
+    font-size: 0.7em;
+    margin: 5px;
+  }
+  .section-version{
+    padding: 0px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+  }
+  strong{
+    padding:5px 8px;
+  }
+  hr{
+   margin: 8px 8px; 
+   opacity: 0.5;
+  }
+
+  .aicode-header {
+    position: sticky;
+    top: 0;
+    background: #0b0b0b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .scroll-icon {
+    opacity: 0;
+    font-size: 24px;
+    color: #c5c5c5;
+    cursor: pointer;
+    padding: 10px;
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .scroll-icon.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .scroll-icon.hide {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+.section-version center img{
+  width: 80%;
+}
+  .gpt-help {
+    background-color: #000;
+    color: #ffffff;
+    padding: 20px;
+    margin: 0;
+    font-family:Cursive,sans-serif;
+    transition: height 0.5s ease;
+  }
+  .gpt-help a {
+    color: #0d8fca;
+    text-decoration: none;
+  }
+  .scroll-icon-telegram {
+    opacity: 0;
+    font-size: 24px;
+    color: #c5c5c5;
+    cursor: pointer;
+    padding: 10px;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.scroll-icon-telegram.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-icon-telegram.hide {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.hide {
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+}
+.show {
+    display: block;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+</style>
+</head>
+<div id="div">
+  <div class="aicode-header">
+<div style="display:flex;align-items:center;background: conic-gradient(
+#16172895 0deg, #050515f1 0deg 120deg, #1f2665 38deg 45deg,    #000075d7 50deg 70deg, #100e72 100deg 10deg,#161721b6 100deg);margin:0;">
+  <img src="https://i.postimg.cc/jSVSBvzL/icon.png" alt="Aicode GPT icon" style="width:40px;">
+      <h1><span style="color:#56aedd;">Ai</span><span style="color:#fffcee;">Code GPT</span></h1>      <div style="display:flex;flex-direction:column;gap:8px;">
+      <small style="font-size:0.46em;color:#e0ab27;;">&nbspno api key</small>
+      <small style="font-size:0.46em;color:#e0ab27;">&nbsp3.4.1</small>
+      </div>
+</div>
+  
+
+      <img id="scroll-icon-telegram" class="scroll-icon-telegram" src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="35px" />    
+      
+            <img id="scroll-icon" class="scroll-icon" src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="35px" />
+    </div>
+    
+<div class="container">
+<p align="center">
+  <img src="https://img.shields.io/badge/⇓_Size-2.30MB-darkgreen?style=for-the-badge" alt="Size Badge">
+  <img src="https://img.shields.io/badge/⊙_Version-3.4.1-orange?style=for-the-badge" alt="Version Badge">
+  <img src="https://img.shields.io/badge/≡_Type-Ai_Assistant-blue?style=for-the-badge">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Api_key-Optional-lightblue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/multiple_models-lightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Fastest-red?style=for-the-badge">
+  <img src="https://img.shields.io/badge/User_Friendly-brown?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Mobile-Support-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Tablet-Support-black?style=for-the-badge">
+</p>
+
+<details>
+  <summary style="font-style:bold;">Click to Watch Video</summary>
+  <iframe width="100%" height="250px" src="https://www.youtube.com/embed/cZmtinG4Q5E" frameborder="0" allowfullscreen></iframe>
+</details>
+
+<h2>Support Models</h2>
+<div style="display: flex; justify-content: center; gap: 15px; background: rgba(0, 0, 0, 0.8); padding: 10px 15px; border-radius: 30px; backdrop-filter: blur(5px); width: 90%; margin: auto;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; transition: transform 0.2s ease-in-out;">
+        <img src="https://static.vecteezy.com/system/resources/previews/022/227/364/non_2x/openai-chatgpt-logo-icon-free-png.png" alt="OpenAI" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: white; padding: 5px;">
+        <span style="font-size: 12px; color: white; font-weight: bold;">OpenAI</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; transition: transform 0.2s ease-in-out;">
+        <img src="https://www.pngall.com/wp-content/uploads/16/Google-Gemini-Logo-Transparent.png" alt="Gemini" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: white; padding: 5px;">
+        <span style="font-size: 12px; color: white; font-weight: bold;">Gemini</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; transition: transform 0.2s ease-in-out;">
+        <img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/4/mistral-ai-icon-3djkpjyks645ah3bg6zbxo.png/mistral-ai-icon-72wf09t6yllwqfky4jm3ql.png?_a=DAJFJtWIZAAC" alt="Mistral" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: white; padding: 5px;">
+        <span style="font-size: 12px; color: white; font-weight: bold;">Mistral</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; transition: transform 0.2s ease-in-out;">
+        <img src="https://images.seeklogo.com/logo-png/61/2/deepseek-ai-icon-logo-png_seeklogo-611473.png" alt="DeepSeek" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: white; padding: 5px;">
+        <span style="font-size: 12px; color: white; font-weight: bold;">DeepSeek</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; transition: transform 0.2s ease-in-out;">
+        <img src="https://store-images.s-microsoft.com/image/apps.22898.ce127097-0896-47c3-a1f9-bb5f96a22dfb.83b03104-b829-4257-96dc-ed0f9fb0de7d.3ca3adc9-d1e9-40a7-9b5e-12f50bcbf30b" alt="Llama" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: white; padding: 5px;">
+        <span style="font-size: 12px; color: white; font-weight: bold;">Llama</span>
+    </div>
+</div>
+
+<h2>Versions</h2>
+<div class="section-version">
+<div class="highlight">
+    <hr>
+    <strong>4.0.0v upcoming</strong> 
+    <hr>
+    
+    <ul>
+    <li>
+      Upcoming More Features...
+    </li>
+    <li>
+      Model Setting & Management...
+    </li>
+    </ul>
+  </div>
+
+
+
+<div class="current">
+  <hr>
+    <strong>3.4.0v , 3.4.1v current</strong> 
+  <hr>
+  <ul>
+    <li>
+      Fixed Minor Bugs <code>[3.4.1v]</code>
+    </li>
+    <li>
+      Mistral Ai Provider Support <code>[3.4.0v]</code>
+    </li>
+      <small style="color:#22b93f;font-size:0.6em;padding-bottom:30px;">
+  Get `free API` key from  <a href="https://console.mistral.ai/api-keys" target="_blank">Mistral Official Website 📎</a>
+  <br>
+</small>
+<hr>
+    <center>
+  <img src="https://i.postimg.cc/T3XxKX3h/IMG-20250226-170444.png" alt="Gemini" style="width:300px;">
+    </center>
+
+
+    <li>
+      Deepseek think enable <code>[3.4.0v]</code>
+    </li>
+    
+    <center>
+  <img src="https://s3.gifyu.com/images/bbKAl.gif" alt="Deepseek think enable" style="width:300px;">
+    </center>
+    
+    
+    <li>
+      Enhanced user Experience eg: Swipe to close , ... <code>[3.4.0v]</code>
+    </li>
+    
+       <center>
+  <img src="https://s3.gifyu.com/images/bbKoG.gif" alt="Swipe to close" style="width:300px;">
+    </center>
+    
+    <li>
+      Optimize 2.0 faster than 3.3.4v - Low Ram consumption Algoritm used <code>[3.4.0v]</code>
+    </li>
+    
+    <li>
+      Image to Text support : Deepseek , Mistral , Llamma , Gemini model <code>[3.4.0v]</code>
+    </li>
+    
+    <li>
+      Some Bug Fixed <code>[3.4.0v]</code>
+    </li>
+    
+  </ul>
+</div>
+  
+  
+  
+<div class="old">
+    <hr>
+    <strong>3.3.0v , 3.3.1v , 3.3.2v , 3.3.3v , 3.3.4v current</strong> 
+  <hr>
+  <ul>
+    <li>
+      Fixed Minor Bug <code>[3.3.2v , ..3v , ..4v]</code>
+    </li>
+    <li>
+    image 2 text : Uses compressed image for uses minimum storage <code>[3.3.4v]</code>
+    </li>
+    <li>
+      More secured <code>[3.3.4v]</code>
+    </li>
+    <li>
+      Image to Text model added <sup style="font-size:0.4em;">beta</sup> <code>[3.3.1v]</code>
+    </li>
+    
+      <center>
+  <img src="https://i.postimg.cc/2yh3Cxms/Screenshot-2025-02-24-22-44-42-94-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Image to Text model" style="width:300px;">
+    </center>
+    
+    <li>
+      Added Scroll to Top button <code>[3.3.1v]</code>
+    </li>
+  <center>
+    <img src="https://s3.gifyu.com/images/bSoSJ.gif" alt="Scroll to Top Button" style="width:300px;">
+  </center>
+  
+      
+    <li>
+      Sticky code copy & select button <code>[3.3.1v]</code>
+    </li>
+  <center>
+    <img src="https://s3.gifyu.com/images/bSopB.gif" alt="drag & drop paste" style="width:300px;">
+  </center>
+    
+      <li>
+      Improved UI <code>[3.3.1v]</code>
+    </li>
+  
+    <li>
+      <p>Bug fixed: Issues when animation is disabled</p>
+      <small style="color:#ff3200;font-size:0.6em;padding-bottom:30px;"> Acode Editor > Settings > App Settings > Animation > Yes </small> <br><small style="color:#1cbd55;font-size:0.6em;padding-bottom:30px;">Enable It to get better Experience</small><code> [3.3.1v]</code>
+    </li>
+    
+    <li>
+      Bug fixed: Minor <code>[3.3.1v]</code>
+    </li>
+    
+    <li>
+      Incresed Usage limit 5T <span style="color:green;">-></span> 6T<sup style="color:green;">+</sup> <code>[3.3.0v]</code>
+    </li>
+    <li>
+      Added Gemini Provider Support <code>[3.3.0v]</code>
+    </li>
+    <small style="color:#22b93f;font-size:0.6em;padding-bottom:30px;">
+  You can get `free API` key from  <a href="https://aistudio.google.com/app/apikey?_gl=1*luofod*_ga*NzQ3Nzg0NS4xNzQwMjIyNzI2*_ga_P1DBVKWT6V*MTc0MDM3Mjk4NS42LjEuMTc0MDM3Mjk5Ny40OC4wLjEwOTY1NTM2ODg." target="_blank">Gemini Api Website</a>
+  
+</small>
+<hr>
+
+  <center>
+  <img src="https://media.licdn.com/dms/image/v2/D5612AQG9Nqvmoflq0w/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1701946062293?e=2147483647&v=beta&t=Xn3B3SZ6KasK26JnMKfWV8-P5GD_1qHAPxkkTNm80eY" alt="Gemini" style="width:300px;">
+    <hr>
+    <img src="https://i.postimg.cc/1tBTP2GD/Screenshot-2025-02-24-14-07-29-45-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Select codes button" style="width:300px;">
+    <hr>
+    <img src="https://i.postimg.cc/PJVbsNWp/Screenshot-2025-03-12-08-12-43-26-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Select codes button" style="width:300px;">
+  </center>
+  
+      <li>
+      Improved Ui <code>[3.3.0v]</code>
+    </li>
+  </ul>
+  <hr>
+    <strong>3.2.0v, 3.2.1v, 3.2.2v , 3.2.3v</strong> 
+  <hr>
+  <ul>
+    <li>
+      Minor bug fixed <code>[3.2.3v]</code>
+    </li>
+    <li>
+      Increase User Experience <code>[3.2.2v]</code>
+    </li>
+    <li>
+      Added supportive models <code>[3.2.2v]</code>
+    </li>
+  <center>
+    <img src="https://i.postimg.cc/x1w0Mz2G/Screenshot-2025-02-17-23-29-34-15-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Select codes button" style="width:300px;">
+    <hr>
+    <img src="https://i.postimg.cc/YCCvSgxd/Screenshot-2025-02-17-23-31-50-49-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Select codes button" style="width:300px;">
+  </center>
+    <li>
+      Fixes some issues  <code>[3.2.1v]</code>
+    </li>
+  <center>
+    <img src="https://i.postimg.cc/W3b9433C/Screenshot-2025-02-03-13-53-48-86-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Select codes button" style="width:300px;">
+  </center>
+      <li>
+      Added select button to easily select codes and drag paste into Code <code>[3.2.0v]</code>
+    </li>
+      <br>
+  <center>
+    <img src="https://i.postimg.cc/0NFstsNf/Screenshot-2025-01-04-22-31-35-47-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Select codes button" style="width:300px;">
+  </center>
+
+    <br>
+  <center>
+    <img src="https://s7.gifyu.com/images/SX7QF.gif" alt="drag & drop paste" style="width:300px;">
+  </center>
+  <br>
+      <li>
+      Whole text insert into code  <code>[3.2.0v]</code>
+    </li>
+    
+  
+  <br>
+    <center>
+    <img src="https://i.postimg.cc/9Q0tJcXx/Screenshot-2025-01-05-23-04-02-72-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Select codes button" style="width:300px;">
+  </center>
+  <br>
+          <li>
+      Image goto link and copy link button in gpt responsed which images are taken from internet  <code>[3.2.0v]</code>
+    </li>
+    
+       <center>
+    <img src="https://i.postimg.cc/SRtbHbSV/Screenshot-2025-01-04-18-35-51-90-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Image link view and copy popup" style="width:300px;">
+  </center>
+    
+          <li>
+      Some Known Bugs Fixed  <code>[3.2.0v]</code>
+    </li>
+  </ul>
+  
+  <hr>
+    <strong>3.1.4v , 3.1.5v , 3.1.6v , 3.1.7v</strong> 
+  <hr>
+  <ul>
+    <li>
+      Some Bugs Fixed <code>[3.1.7v]</code>
+    </li>
+    <li>
+      Some Bugs Fixes & Optimized <code>[3.1.6v]</code>
+    </li>
+        <li>
+      More smooth experience <code>[3.1.6v]</code>
+    </li>
+        <li>
+      NEW --> GPT special effects , close button , path reset button in setting , More <code>[3.1.6v]</code>
+    </li>
+        <center>
+    <img src="https://i.postimg.cc/vmKfXjMt/Screenshot-2024-11-16-19-27-25-80-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" style="width:300px;">
+    </center>
+        <li>
+      Bug Fixes & Optimized <code>[3.1.6v]</code>
+    </li>
+    <li>
+      Bug Fixed <code>Not Renponse on clicking GPT icon [3.1.5v]</code>
+    </li>
+      <li>
+      Bug Fixed <code>Chat history Day wise group problem [3.1.5v]</code>
+    </li>
+       <li>
+      Bug Fixes <code>More Minor bugs [3.1.5v]</code>
+    </li>
+    <li>
+      Upgraded Setting page
+    </li>
+    
+    <li>
+      Enhenched User Experienced
+    </li>
+
+    <li>
+      Chat history with grouped display by date & time
+    </li>
+    
+    <center>
+    <img src="https://i.postimg.cc/rm1Z8KcQ/Screenshot-2024-11-12-12-40-35-93-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" style="width:300px;">
+    </center>
+
+    <li>
+      Now image can be Generates by chat type model 
+    </li> 
+
+    <li>
+      Reloading problem solved
+    </li>
+
+    <li>
+      Faster than previous version
+    </li>
+
+    <li>
+      Fixes more Bugs
+    </li>
+  </ul>
+    <hr>
+    <strong>3.1.2  3.1.3</strong> 
+    <hr>
+    
+    <ul>
+    <li>
+      Enhenched Setting Page
+    </li>
+      <li>
+      Select catch
+    </li>
+    
+        <center>
+  <img src="https://i.postimg.cc/hvnfTxRG/Screenshot-2024-11-09-19-26-29-99-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+        </center>
+      <li>
+      View Selected Text
+    </li>
+       <center>
+  <img src="https://i.postimg.cc/kGGLjYmY/Screenshot-2024-11-09-19-26-47-91-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+    <li>
+      Copy secret token
+    </li> 
+        <center>
+  <img src="https://i.postimg.cc/cLKP73J0/Screenshot-2024-11-09-19-22-14-53-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+    <li>
+      delete whole chats data
+    </li>
+    <center >
+  <img src="https://i.postimg.cc/Wpn8d4T8/Screenshot-2024-11-09-19-21-05-66-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+    <li>
+      Catch Local function from editor
+    </li>
+    <center >
+  <img src="https://i.postimg.cc/J4LmN7wF/Screenshot-2024-11-09-16-40-14-18-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+      <li>
+      Recognize premium model by its color 
+    </li>
+          <ul>
+      <li style="border-left:#c4bd06 solid 15px;">Premium</li>
+      <li style="border-left:#10b7e1c7 solid 15px;">Smart</li>
+      <li style="border-left:#d5d3d3c7 solid 15px;">Fastest</li>
+      </ul>
+<center >
+  <img src="https://i.postimg.cc/3wvVZNsD/Screenshot-2024-11-09-18-48-20-09-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+      <li>
+      Feedback without hesitate
+    </li>
+<center>
+  <img src="https://i.postimg.cc/GhJdjcV9/Screenshot-2024-11-10-15-41-37-73-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+    <li>
+      Fixed Models Update System , Scroll issues , Some Bugs
+    </li>
+    <li>
+      More...
+    </li>
+    </ul>
+  
+      <hr>
+    <strong>3.0.0 , 3.0.1 , 3.1.1</strong>
+    <hr>
+    
+    <ul>
+    <li>
+      Added Setting page
+    </li>
+      <li>
+      Fixed Minor Bugs 
+    </li>
+    </ul>
+
+    <hr>
+<strong>2.0.3, 2.0.4</strong> 
+    <hr>
+    <ul>
+      <li>
+        Fixed Minor Bugs
+      </li>
+    </ul>
+    
+    <hr>
+<strong>1.0.0, 2.0.0, 2.0.1, 2.0.2</strong>
+    <hr>
+
+    <ul>
+<li>Released Aicode GPT, Release Features</li>
+<li>Fast AI Assistant</li>
+<center >
+  <img src="https://i.postimg.cc/3RPjzjrD/IMG-20241015-160953.jpg" alt="Long-Press-To-Manage-Chats">
+</center>
+<li>Multiple AI Models <span style="color:#0c8859;">[No Need Any Api key]</span></li>
+<small style="color:#9bb20e;font-size:0.6em;padding-bottom:30px;">
+  Here free & paid models both available 
+</small>
+<center >
+  <img src="https://i.postimg.cc/8kZjTWjt/Screenshot-2024-11-09-10-40-09-43-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats">
+</center>
+<li>Web Search AI <sup style="font-size:0.4em;">beta</sup></li>
+<small style="color:#ec5344;font-size:0.6em;">
+  !This feature is in beta stage currently may not work properly
+</small>
+
+<center >
+  <img src="https://i.postimg.cc/50YYG2mf/Screenshot-2024-11-09-10-42-13-43-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+
+
+<li>Editor Integration <sup style="font-size:0.4em;">beta</sup></li>
+<small style="color:#ec5344;font-size:0.6em;">
+  !This feature is in beta stage currently may not work properly
+</small>
+<center >
+  <img src="https://i.postimg.cc/kX4H6rwW/Screenshot-2024-11-09-10-50-37-33-99c04817c0de5652397fc8b56c3b3817.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+
+<li>OpenAI API Key Support</li>
+<small style="color:#22b93f;font-size:0.6em;padding-bottom:30px;">
+  If you have OpenAI api key then you can use or get from <a href="https://platform.openai.com/api-keys" target="_blank">OpenApi Key Website</a>
+  
+</small>
+<center >
+  <img src="https://images.indianexpress.com/2024/12/OpenAI.jpg?w=640" alt="Long-Press-To-Manage-Chats" >
+</center>
+<hr>
+
+<center >
+  <img src="https://i.postimg.cc/ZKt1QsLN/Screenshot-2024-11-09-10-54-27-83-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+
+<li>Save Chat History Locally</li>
+<center >
+  <img src="https://i.postimg.cc/J4RsbL2Y/Screenshot-2024-11-09-11-02-02-12-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+
+<li>Chat Management By Long Press</li>
+<center >
+  <img src="https://i.postimg.cc/6Q7Hdvgh/Screenshot-2024-11-08-22-12-31-43-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+<li>Secure Login By Using Gmail Account</li>
+<center >
+  <img src="https://i.postimg.cc/zX1qhFVJ/IMG-20241109-110647.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+
+<li>User-Friendly Interface</li>
+<li>Select Code Text and Ask</li>
+<center >
+  <img src="https://i.postimg.cc/6Q7Hdvgh/Screenshot-2024-11-08-22-12-31-43-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+<li>Support Text to Image Models</li>
+<center >
+  <img src="https://i.postimg.cc/GtzbfKdc/IMG-20241015-161900.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+<li>Fast Access from Active File Bar of code editor</li>
+<center >
+  <img src="https://i.postimg.cc/XY3J8JCR/Screenshot-2024-11-09-10-35-21-83-a2cf8efcdd42a8e6f7906303f104fb67.jpg" alt="Long-Press-To-Manage-Chats" >
+</center>
+
+</ul>
+
+</div>
+</div>
+
+</div>
+
+  <h2>Upcoming Features</h2>
+  <div class="upcoming-list section">
+    <ul>
+      <li class="upcoming-item"><strong>🔍 Advanced Web Search AI:</strong> More refined AI-powered search results.</li>
+      <li class="upcoming-item"><strong>💥 Improved Code Querying:</strong> Enhanced interaction with your current code.</li>
+      <li class="upcoming-item"><strong>☁️ Server-Side History:</strong> Automatic cloud-saving of chat history.</li>
+      <li class="upcoming-item"><strong>💯 UI Enhancements:</strong> Improvements for a better user experience.</li>
+    </ul>
+  </div>
+  <h2>Need help?</h2>
+  <div class="gpt-help" >
+    <p>For assistance, debugging, or feedback, contact the developer via <a href="https://telegram.me/cosmodec">Telegram</a>. </p>
+    <p>
+      The plugin is continuously improving, and your input helps shape future updates!
+  </p>
+  </div>
+</div>
+</html>

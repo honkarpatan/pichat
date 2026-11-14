@@ -1,0 +1,368 @@
+.gpt-login-page {
+  height: 100vh;
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--primary-color, #1e1e1e);
+  
+  /* 🟢 PRO FIX: Sidebar Positioning */
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99999;
+  box-shadow: -8px 0 30px rgba(0,0,0,0.6); /* বাম পাশে শ্যাডো যাতে এডিটরের থেকে আলাদা লাগে */
+  
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* 🟢 PRO FIX: Slide-in Animation */
+  transform: translateX(100%);
+  animation: gptSidebarSlideIn 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes gptSidebarSlideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.gpt-sign-page-close-gpt {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background: transparent;
+  border: none;
+  color: var(--secondary-text-color, #888);
+  cursor: pointer;
+  z-index: 10;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.gpt-sign-page-close-gpt:hover {
+  background: var(--secondary-color, rgba(255,255,255,0.1));
+  color: var(--primary-text-color, #fff);
+  transform: scale(1.05);
+}
+
+#login-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 40px 20px 20px;
+  scrollbar-width: none; /* Hide scrollbar for clean look */
+}
+
+#login-box::-webkit-scrollbar {
+  display: none;
+}
+
+/* Header Styles */
+.gpt-login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.gpt-login-logo {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--active-text-color, #4b5dd1), #10a37f);
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+.gpt-login-logo svg {
+  width: 32px;
+  height: 32px;
+  fill: #fff;
+}
+
+.gpt-login-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--primary-text-color, #fff);
+  margin: 0 0 5px 0;
+  letter-spacing: -0.5px;
+}
+
+.gpt-login-subtitle {
+  font-size: 13px;
+  color: var(--secondary-text-color, #aaa);
+  margin: 0;
+}
+
+/* Form Containers */
+.gpt-login-container, .gpt-signup-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.gpt-input-wrapper {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.gpt-input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--secondary-text-color, #888);
+  pointer-events: none;
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px 14px 14px 42px;
+  background-color: var(--secondary-color, #2a2a2a);
+  border: 1px solid var(--border-color, #444);
+  color: var(--primary-text-color, #fff);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  border-color: var(--active-text-color, #4b5dd1);
+  background-color: var(--primary-color, #1e1e1e);
+  box-shadow: 0 0 0 3px rgba(75, 93, 209, 0.15);
+}
+
+.input-field::placeholder {
+  color: var(--secondary-text-color, #777);
+}
+
+/* Primary Button */
+.login-button {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--active-text-color, #4b5dd1);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.login-button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+/* Links & Footer */
+.gpt-signup-link, .gpt-signin-link {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 13px;
+  color: var(--secondary-text-color, #aaa);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+.gpt-signup-link span {
+  color: var(--active-text-color, #4b5dd1);
+  font-weight: 600;
+}
+
+.gpt-signup-link:hover span, .gpt-signin-link:hover {
+  color: var(--primary-text-color, #fff);
+  text-decoration: underline;
+}
+
+.gpt-declaimer-message {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 11px;
+  color: var(--secondary-text-color, #666);
+  line-height: 1.6;
+}
+
+/* Iframe Container */
+.signup-form iframe {
+  border-radius: 12px;
+  background: var(--secondary-color, #2a2a2a);
+  border: 1px solid var(--border-color, #444);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+/* Navigation Animations */
+.gpt-hide-navigate {
+  display: none !important;
+}
+
+.gpt-show-navigate {
+  display: flex !important;
+  animation: gptFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes gptFadeIn {
+  from { opacity: 0; transform: translateY(15px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.gpt-login-page {
+    height: 100vh;
+    width: 85%;
+    max-width: 400px;
+    background-color: var(--primary-color, #1e1e1e);
+    position: fixed;
+    top: 0px;
+    z-index: 99999;
+    box-shadow: rgba(0, 0, 0, 0.6) -8px 0px 30px;
+    display: flex;
+    flex-direction: column;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transform: translateX(100%);
+    animation: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) 0s 1 normal forwards running gptSidebarSlideIn;
+    left: 0px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 14px 14px 14px 42px;
+    background-color: var(--secondary-color, #2a2a2a);
+    border: 1px solid var(--border-color, #444);
+    color: var(--primary-text-color, #fff);
+    border-radius: 4px 4px 4px 16px;
+    outline: none;
+    transition: 0.2s;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px 14px;
+    color: var(--primary-text-color);
+    border: none;
+    border-radius: 4px 16px 4px 4px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+    margin-top: 8px;
+    background-color: var(--button-background-color);
+}
+
+.gpt-login-logo {
+    width: 56px;
+    height: 56px;
+    background: rgba(17, 17, 17, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 2px;
+    border-radius: 50%;
+}
+
+#login-box {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden auto;
+    padding: 40px 20px 20px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#login-box {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden auto;
+    padding: 40px 20px 20px;
+    border-left: 10px solid var(--popup-border-color);
+}
+
+.gpt-login-page {
+    height: 100vh;
+    width: 90%;
+    max-width: 400px;
+    background-color: var(--primary-color, #1e1e1e);
+    position: fixed;
+    top: 0px;
+    z-index: 99999;
+    box-shadow: rgba(0, 0, 0, 0.6) -8px 0px 30px;
+    display: flex;
+    flex-direction: column;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transform: translateX(100%);
+    animation: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) 0s 1 normal forwards running gptSidebarSlideIn;
+    left: 0px;
+}
+
