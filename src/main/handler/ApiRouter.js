@@ -2,6 +2,7 @@
 import { ConfigManager } from '../utils/ConfigManager.js';
 import { AgentRunner } from '../agent/main/AgentLoop.js';
 import { ApiKeyManager } from '../model/ApiKeyManager.js';
+import { PiAgentRunner, isPiEngineActive } from '../agent_pi/index.js';
 
 const TAG = '[ApiRouter]';
 
@@ -23,6 +24,12 @@ export class ApiRouter {
             const isPureCustom = !!config.isCustomModel;
             const needsAgentTools =
                 (app.isEnableAgentMode || app.isEnableStudyMode) && !!config.supportsTools;
+
+            // Agent engine = Pi: separate engine in src/main/agent_pi (Agent mode only)
+            if (isPiEngineActive(app, config)) {
+                console.log(TAG, '→ PATH: PiAgentRunner');
+                return await PiAgentRunner.route(app, config, modelType, apiMessages, onChunk);
+            }
 
             console.log(TAG, 'route decision', {
                 modelType,

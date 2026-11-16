@@ -1,4 +1,5 @@
 // src/main/settings/schemas/chatHandlerSettings.js
+import { agentEngineFields } from '../../agent_pi/PiSettings.js';
 
 export const chatHandlerSettingsSchema = [
     { type: 'header', label: 'Conversation Context' },
@@ -243,6 +244,9 @@ export const chatHandlerSettingsSchema = [
         default: false
     },
     
+    // Agent engine selector (AiChat default | Pi) + Pi settings sub-page
+    ...agentEngineFields,
+
     // 🟢 Agent Mode Settings Sub-page
     {
         type: 'page',

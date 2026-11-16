@@ -77,7 +77,7 @@ export class VertexAI {
       .filter(m => m?.role === 'system')
       .map(m => (typeof m.content === 'string' ? m.content : ''))
       .filter(Boolean);
-    if (tools && tools.length) systemBits.unshift(SYSTEM_INSTRUCTION);
+    if (tools && tools.length && !app?._piActive) systemBits.unshift(SYSTEM_INSTRUCTION);
     if (systemBits.length) {
       requestBody.systemInstruction = {
         role: 'user',

@@ -139,6 +139,8 @@ export function getUserSystemPrompt(app) {
 }
 
 export function getSystemInstruction(app) {
+  // Pi engine: its own complete prompt (already includes user instructions + think markers)
+  if (app?._piActive && app._piSystemPrompt) return app._piSystemPrompt;
   const thinkBody = resolveBuiltinPrompt(app, 'SIMULATED_THINK_INSTRUCTION');
   const withThink = (body) => {
     if (!app?._injectSimulatedThinkPrompt) return body;

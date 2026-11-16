@@ -119,7 +119,7 @@ export class Bedrock {
     const url = `https://${host}${path}`;
 
     let system = [];
-    if (tools && tools.length) {
+    if (tools && tools.length && !app?._piActive) {
       system.push({ text: SYSTEM_INSTRUCTION });
     }
     const systemFromMsgs = (messages || [])
