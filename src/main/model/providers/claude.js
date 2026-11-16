@@ -73,7 +73,7 @@ export class Claude {
         let nonSystemMessages = [];
 
         // 🟢 Inject Universal System Instruction for Agent Mode
-        if (tools && tools.length > 0) {
+        if (tools && tools.length > 0 && !app?._piActive) {
             systemPrompt += SYSTEM_INSTRUCTION + "\n\n";
         }
 
